@@ -1,3 +1,5 @@
-var a= parseInt("enter one number");
-var b=parseInt("enter another number ");
-alert(a+b);
+
+function bmiCalculator(weight, height){
+    var bmi = weight/ Math.pow(height,2);
+    return math.round(bmi);
+}
