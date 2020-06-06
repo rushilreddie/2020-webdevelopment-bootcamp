@@ -1,3 +1,4 @@
-const fs = require('fs');
+var pokemon = require("pokemon");
+var myPokemon = pokemon.random();
+console.log(myPokemon);
 
-fs.copyFileSync("file1.txt","file2.txt");
