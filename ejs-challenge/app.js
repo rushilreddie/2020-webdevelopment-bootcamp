@@ -54,7 +54,7 @@ posts.forEach(function(post){
   const storedTitle= _.lowerCase(post.title);
 
   if (storedTitle === requestedTitle){
-    res.render("post",{
+    res.render("post",{  
       title: post.title,
       content:post.content
     })
