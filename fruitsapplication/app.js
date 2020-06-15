@@ -5,7 +5,11 @@ mongoose.connect("mongodb://localhost:27017/fruitsDB", {useNewUrlParser: true, u
 
 const fruitSchema = new mongoose.Schema ({
     name: String,
-    rating: Number,
+    rating: {
+      type: Number, 
+      min:1 ,
+      max:10
+    },
     review: String
 });
 
@@ -13,11 +17,11 @@ const Fruit = mongoose.model("Fruit", fruitSchema);
 
 const fruit = new Fruit ({
     name: "Apple",
-        rating: 7,
+        rating: 15,
         review: "Red fruit"
 });
 
-//fruit.save();
+// fruit.save();
 
 const personSchema = new mongoose.Schema ({
   name: String,
@@ -29,7 +33,7 @@ const person = new Person ({
     name: "John",
     age: 25
 });
-//person.save();
+person.save();
 
 
 
@@ -45,3 +49,12 @@ const person = new Person ({
       callback(fruits);
     });
   };
+
+  // Fruit.deleteMany({name:"Apple"}, function(err){
+  //   if (err){
+  //     console.log(err);
+  //   }else{
+  //     console.log("Succesfully deleted the document");
+      
+  //   }
+  // }) ;
