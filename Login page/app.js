@@ -71,13 +71,6 @@ app.post("/login", function(req,res){
 
 
 
-app.post("/about", function(req,res){
-    const username = req.body.username;
-    const password = req.body.password;
-})
-
-
-
 app.listen(3000, function () {
     console.log("Server has started on port 3000");
 });
