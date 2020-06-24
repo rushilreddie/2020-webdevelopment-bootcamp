@@ -1,3 +1,5 @@
+
+//all the modules added to the code
 require('dotenv').config();
 const express= require("express");
 const bodyParser = require("body-parser");
@@ -11,29 +13,32 @@ const findOrCreate = require('mongoose-findorcreate')
 
 // const bcrypt = require("bcrypt");
 // const saltRounds = 10;
-
+//requiring the express module
 const app = express();
 
-
+//allowing to read the body parser and the ejs files
 app.use(express.static("public"));
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({
     extended:true
 }));
 
+//creating session to let the password
 app.use(session({
     secret: "Our little secret.", 
     resave: false,
     saveUninitialized: false
 }));
 
+//initializing the code to create cookies in the webpage
 app.use(passport.initialize());
 app.use(passport.session());
 
-
+//allowing to access the database to the user page 
 mongoose.connect("mongodb://localhost:27017/userDB", {useNewUrlParser:true,  useUnifiedTopology: true});
 mongoose.set('useCreateIndex', true);
 
+//creating the schema model of storing the data in the database
 const userSchema = new mongoose.Schema({
     email: String,
     password: String,
@@ -41,11 +46,11 @@ const userSchema = new mongoose.Schema({
     secret: String
 });
 
-
+//allowing to create a new schema to cookie in the login session
 userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate);
 
-
+//defining the model to take the user id and login using the credentials
 const User = new mongoose.model("User", userSchema);
 
 passport.use(User.createStrategy());
@@ -64,6 +69,7 @@ passport.serializeUser(function(user, done) {
 // passport.serializeUser(User.serializeUser());
 // passport.deserializeUser(User.deserializeUser());
 
+//implementing the google login and also giving the oath token to login to the site
 passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
@@ -79,6 +85,7 @@ passport.use(new GoogleStrategy({
   }
 ));
  
+//deciding the routes and defining the pages to render while the buttons are clicked
 app.get("/", function(req,res){
     res.render("home")
 });
@@ -102,7 +109,7 @@ app.get("/register", function(req,res){
     res.render("register")
 });
 
-
+//rendering the code to take into the secrets and populate the secrets in order to all the logins 
 
 app.get("/secrets", function(req,res){
     User.find({"secret": {$ne: null}}, function(err, foundUsers){
@@ -130,6 +137,7 @@ app.get("/submit",  function(req,res){
     }  
 })
 
+//submitting the post request and displaying it dynamically to the page of secrets and all the users
 app.post("/submit" , function(req, res){
     const submittedSecret = req.body.secret;
 
@@ -150,6 +158,8 @@ app.post("/submit" , function(req, res){
     });
     
 });
+
+//redirect to logout of the page and directly still login into the website using the google auth api
 
 app.get("/logout", function(req,res){
     req.logout();
@@ -186,6 +196,7 @@ User.register({username: req.body.username}, req.body.password, function(err, us
 
 });
 
+//auth the code login using localhost api
 app.post("/login", function(req,res){
 
         const user = new User({
@@ -225,7 +236,7 @@ app.post("/login", function(req,res){
     // });
 });
 
-
+//localhost where the page is to be populated.
 
 app.listen(3000, function () {
     console.log("Server has started on port 3000");
