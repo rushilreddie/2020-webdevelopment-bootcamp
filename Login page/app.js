@@ -12,6 +12,11 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const findOrCreate = require('mongoose-findorcreate');
 
 // const bcrypt = require("bcrypt");
+
+
+
+
+
 // const saltRounds = 10;
 //requiring the express module
 const app = express();
