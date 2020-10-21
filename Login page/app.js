@@ -183,22 +183,22 @@ User.register({username: req.body.username}, req.body.password, function(err, us
     }
 });
 
----------------------------------------------
-bcrypt.hash(req.body.password, saltRounds, function(err,hash){
-    const newUser = new User({
-        email: req.body.username ,
-        password: hash
-    });
 
-    newUser.save(function(err){
-        if (err){
-            console.log(err);
-        }else{
-            res.render("secrets");
-        }
-    });
-});
--------------------------------------------------------
+// bcrypt.hash(req.body.password, saltRounds, function(err,hash){
+//     const newUser = new User({
+//         email: req.body.username ,
+//         password: hash
+//     });
+
+//     newUser.save(function(err){
+//         if (err){
+//             console.log(err);
+//         }else{
+//             res.render("secrets");
+//         }
+//     });
+// });
+
 });
 
 //auth the code login using localhost api
